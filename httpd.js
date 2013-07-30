@@ -145,7 +145,7 @@ for(var f in (configuration&&configuration.option||{})){
 }
 
 // Sets a default theme to use, may be removed for a custom theme specified in format.ttl
-require('./botblocks').importTheme(route, resources, renders);
+require('./').importTheme(route, resources, renders);
 
 // Post-auth
 httpAuthCookie.routeSession(route, httpAuthForm);
@@ -164,7 +164,7 @@ var httpd = require('http').createServer(require('magnode/http').createListener(
 httpd.listen(listenPort);
 
 // Attach websocket listener
-var interface =  new (require('./botblocks/websocketd'));
+var interface =  new (require('./lib/websocketd'));
 interface.listenWebsocket(httpd);
 
 

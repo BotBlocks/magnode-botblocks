@@ -1,0 +1,17 @@
+[submodule "node_modules/ws"]
+	path = node_modules/ws
+	url = git://github.com/einaros/ws.git
+	semver = *
+	npm = ws
+[submodule "node_modules/commander"]
+	path = node_modules/commander
+	url = https://github.com/visionmedia/commander.js.git
+	npm = commander
+[submodule "node_modules/tinycolor"]
+	path = node_modules/tinycolor
+	url = git://github.com/einaros/tinycolor.git
+	npm = tinycolor
+[submodule "node_modules/options"]
+	path = node_modules/options
+	url = git://github.com/einaros/options.js.git
+	npm = options

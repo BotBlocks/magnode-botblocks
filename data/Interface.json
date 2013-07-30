@@ -1,9 +1,9 @@
 { "nodes":
 	[
-		{ "_id": {"$ObjectId": "4ebc890dc4fe78be1a000001"}
-		, "subject": "http://botblocks.org/Interface"
+		{ "_id": {"$ObjectId": "51f82ed2b41e7c22da3d33bf"}
+		, "subject": "http://botblocks.net/Interface"
 		, "type": ["http://magnode.org/MongoDBJSONSchema"]
-		, "label": "Plain page"
+		, "label": "Interface"
 		, "menu":
 			{ "http://localhost/Menu_ManagementMenu":
 				{ "title": "Interfaces"
@@ -109,5 +109,6 @@
 				}
 			}
 		, "tablequery": {"fields":["_id","subject","label"]}
+		}
 	]
 }

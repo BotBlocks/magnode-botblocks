@@ -1,9 +1,9 @@
 { "nodes":
 	[
-		{ "_id": {"$ObjectId": "4ebc890dc4fe78be1a000001"}
-		, "subject": "http://botblocks.org/Script"
+		{ "_id": {"$ObjectId": "51f82ed8b41e7c22da3d33c0"}
+		, "subject": "http://botblocks.net/Script"
 		, "type": ["http://magnode.org/MongoDBJSONSchema"]
-		, "label": "Plain page"
+		, "label": "Script"
 		, "menu":
 			{ "http://localhost/Menu_ManagementMenu":
 				{ "title": "Scripts"
@@ -96,5 +96,6 @@
 				}
 			}
 		, "tablequery": {"fields":["_id","subject","label"]}
+		}
 	]
 }
