@@ -1,0 +1,52 @@
+@prefix type: <http://magnode.org/> .
+@prefix view: <http://magnode.org/view/> .
+@prefix theme: <http://magnode.org/theme/twentyonetwelve/> .
+@prefix bb: <http://botblocks.magnode.org/> .
+
+theme:DocumentHTML_typeHTMLBody
+	a view:Transform, theme:Transform, view:ModuleTransform ;
+	view:module <transform.DocumentHTML_typeHTMLBody.js> ;
+	view:domain ( type:HTMLBody type:HTMLBodyBlock_UserMenu type:HTMLBodyBlock_ResourceMenu theme:HTMLBodyRegion_Header theme:HTMLBodyRegion_Panel theme:HTMLBodyRegion_Footer ) ;
+	view:range type:DocumentHTML, type:Document, "media:text/html;charset=utf-8", "media:application/xhtml+xml;charset=utf-8" ;
+	view:nice -1 .
+
+theme:HTMLBody_typeScript
+	a view:Transform, theme:Transform, view:ModuleTransform ;
+	view:module <transform.HTMLBody_typeScript.js> ;
+	view:domain ( bb:Script ) ;
+	view:range type:DocumentHTML, type:Document, "media:text/html;charset=utf-8", "media:application/xhtml+xml;charset=utf-8" ;
+	view:nice -1 .
+
+theme:HTMLBody_typePage
+	a view:Transform, theme:Transform, view:Jade ;
+	view:file <HTMLBody_typePost.jade> ;
+	view:templateRange type:HTMLBody, type:HTMLBodyPage ;
+	view:titleProperty "label" ;
+	view:domain ( type:Page ) ;
+	view:range type:HTMLBody, type:HTMLBodyPage, type:DocumentTitle .
+
+theme:HTMLBody_typePost
+	a view:Transform, theme:Transform, view:Jade ;
+	view:file <HTMLBody_typePost.jade> ;
+	view:templateRange type:HTMLBody, type:HTMLBodyPost ;
+	view:titleProperty "label" ;
+	view:domain ( type:Post ) ;
+	view:range type:HTMLBody, type:HTMLBodyPost, type:DocumentTitle .
+
+theme:HTMLBodyRegion_typeRegion_Header
+	a view:Transform, theme:Transform, <http://magnode.org/transform/HTMLBodyRegion_typeRegion> ;
+	view:regionLabel "Header" ;
+	view:domain ( theme:DocumentRegion_Header ) ;
+	view:range theme:HTMLBodyRegion_Header .
+
+theme:HTMLBodyRegion_typeRegion_Panel
+	a view:Transform, theme:Transform, <http://magnode.org/transform/HTMLBodyRegion_typeRegion> ;
+	view:regionLabel "Panel" ;
+	view:domain ( theme:DocumentRegion_Panel ) ;
+	view:range theme:HTMLBodyRegion_Panel .
+
+theme:HTMLBodyRegion_typeRegion_Footer
+	a view:Transform, theme:Transform, <http://magnode.org/transform/HTMLBodyRegion_typeRegion> ;
+	view:regionLabel "Footer" ;
+	view:domain ( theme:DocumentRegion_Footer ) ;
+	view:range theme:HTMLBodyRegion_Footer .

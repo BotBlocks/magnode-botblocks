@@ -1,0 +1,82 @@
+!!!strict
+html(xmlns="http://www.w3.org/1999/xhtml", lang="en")
+	head
+		//- meta(http-equiv="Content-Type", content="text/html; charset=utf-8")
+		- var title = input['http://magnode.org/DocumentTitle'] || (input.node&&(input.node.label||input.node.title))
+		title #{title?(title+' - '):''}#{input.title||'Magnode'}
+		//script(type='text/javascript') document.addEventListener("DOMContentLoaded", function(){ console.log('ERHMERGERD'); }, false);
+		//script(type='text/javascript') window.onload = function(){ alert('Loaded'); };
+		- for(var n in scripts)
+			script(type=scripts[n].type,src=scripts[n].src)
+		- for(var n in stylesheets)
+			link(rel="stylesheet",href=stylesheets[n].src)
+	body
+
+		nav.top-bar
+			ul.title-area
+				// Title Area 
+				li.name
+					h1
+						a( href="/", title="Visit the main page") #{input.title||'BotBlocks'}
+				li.toggle-topbar.menu-icon
+					a(href='#')
+						span menu
+			section.top-bar-section
+				ul.left
+					li.divider
+					li.has-dropdown
+						a(href='#') New
+						ul.dropdown
+							li
+								a(href='/bb:Script?new') Script
+							li
+								a(href='/bb:Animation?new') Animation
+							li
+								a(href='/bb:Drawing?new') 2D Model
+							li
+								a(href='/bb:Model?new') 3D Model
+							li
+								a(href='/bb:Instrument?new') Instrument Panel
+				ul.right
+					li.divider
+					li.has-dropdown
+						a(href='#') New
+						ul.dropdown
+							li.title.back.js-generated
+								h5
+									a(href='#') « Back
+							li
+								label Section Name
+							li
+								a(href='#') Dropdown Option
+							li
+								a(href='#') Dropdown Option
+							li.divider
+							li
+								label Section Name
+							li
+								a(href='#') Dropdown Option
+							li
+								a(href='#') Dropdown Option
+							li
+								a(href='#') Dropdown Option
+							li.divider
+							li
+								a(href='#') See all →
+		.row
+			.body!=input["http://magnode.org/HTMLBody"]
+			.head
+				div!=input["http://magnode.org/HTMLBodyBlock_ResourceMenu"]
+				div!=input["http://magnode.org/HTMLBodyBlock_UserMenu"]
+				div!=input["http://magnode.org/theme/twentyonetwelve/HTMLBodyRegion_Header"]
+			.panel
+				div!=input["http://magnode.org/theme/twentyonetwelve/HTMLBodyRegion_Panel"]
+			.foot
+				//pre=util.inspect(input)
+				div(style="margin:10px 0;")
+					hr
+					div.grid_12
+						//- div.footer(style="float:right;") <img src="/public-domain.png"/>
+						div.footer <a href="http://magnode.org/" style="color:#ddf;">Magnode</a>
+						div!=input["http://magnode.org/theme/twentyonetwelve/HTMLBodyRegion_Footer"]
+					div.clear
