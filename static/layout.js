@@ -1,9 +1,16 @@
+var XMLHttpRequest;
+if(!XMLHttpRequest && window.ActiveXObject){ // IE 8 and older
+    XMLHttpRequest = new ActiveXObject("Microsoft.XMLHTTP");
+}
+
 var populateFormsLoaded;
 function populateForms(){
 	if(populateFormsLoaded) return;
 	populateFormsLoaded = true;
 
 	$(document).foundation();
+
+	var onSaveEvents = [];
 
 	var es = document.getElementsByClassName('field-json');
 	for(var i=0; i<es.length; i++){
@@ -103,6 +110,37 @@ function populateForms(){
 			field.appendChild(additem_dd);
 		}catch(e){throw e;}
 	})(es[i]);
+
+	var es = document.getElementsByClassName('form-script-editor');
+	for(var i=0; i<es.length; i++) (function(field){
+		try {
+			var textarea = field.getElementsByClassName('field-ecmascript')[0];
+			var editor = CodeMirror.fromTextArea(textarea, {lineNumbers:true, indentWithTabs:true, tabSize: 4, indentUnit:4, mode:'application/ecmascript'});
+			//new AulxUI.CM(editor); // https://github.com/espadrine/aulx
+
+			var out = field.getElementsByClassName('output')[0];
+			var onSave = function onSave(){
+				editor.save();
+				out.textContent = textarea.value;
+				var request = new XMLHttpRequest;
+				request.open('PUT', document.location);
+				request.onreadystatechange = update;
+				request.setRequestHeader('Content-Type', 'application/json;profile=http://botblocks.net/Script/ecmascript');
+				request.send(textarea.value);
+				function update(){
+					out.textContent = request.readystate + ' ' + request.statusText;
+				}
+			}
+			onSaveEvents.push(onSave);
+		}catch(e){throw e;}
+	})(es[i]);
+
+	var es = document.getElementById('btn-save');
+	if(es){
+		es.onclick = function(){
+			onSaveEvents.forEach(function(v){ v(); });
+		};
+	}
 };
 document.addEventListener("DOMContentLoaded", populateForms, false);
 window.addEventListener( "load", populateForms, false );

@@ -1,21 +1,43 @@
 @prefix type: <http://magnode.org/> .
 @prefix view: <http://magnode.org/view/> .
-@prefix theme: <http://magnode.org/theme/twentyonetwelve/> .
-@prefix bb: <http://botblocks.magnode.org/> .
+@prefix theme: <http://botblocks.net/theme/> .
+@prefix bb: <http://botblocks.net/> .
+
+# Main theme
 
 theme:DocumentHTML_typeHTMLBody
-	a view:Transform, theme:Transform, view:ModuleTransform ;
+	a view:Transform, theme:Transform, view:ModuleTransform, view:DeleteFormTransform, view:FormTransform, view:ViewTransform ;
 	view:module <transform.DocumentHTML_typeHTMLBody.js> ;
-	view:domain ( type:HTMLBody type:HTMLBodyBlock_UserMenu type:HTMLBodyBlock_ResourceMenu theme:HTMLBodyRegion_Header theme:HTMLBodyRegion_Panel theme:HTMLBodyRegion_Footer ) ;
+	view:domain ( type:HTMLBody type:HTMLBodyBlock_UserMenu type:HTMLBodyBlock_ResourceMenu <http://magnode.org/theme/twentyonetwelve/DocumentRegion_Footer> ) ;
 	view:range type:DocumentHTML, type:Document, "media:text/html;charset=utf-8", "media:application/xhtml+xml;charset=utf-8" ;
 	view:nice -1 .
 
-theme:HTMLBody_typeScript
-	a view:Transform, theme:Transform, view:ModuleTransform ;
-	view:module <transform.HTMLBody_typeScript.js> ;
-	view:domain ( bb:Script ) ;
+# Interface formatters
+
+theme:DocumentHTML_typeInterface
+	a view:Transform, theme:Transform, view:ModuleTransform, view:ViewTransform ;
+	view:module <transform.DocumentHTML_typeInterface.js> ;
+	view:domain ( bb:Interface type:HTMLBodyBlock_UserMenu type:HTMLBodyBlock_ResourceMenu <http://magnode.org/theme/twentyonetwelve/DocumentRegion_Footer> ) ;
 	view:range type:DocumentHTML, type:Document, "media:text/html;charset=utf-8", "media:application/xhtml+xml;charset=utf-8" ;
 	view:nice -1 .
+
+# Script formatters
+
+theme:HTMLBody_typeScript_Form
+	a view:Transform, theme:Transform, view:ModuleTransform, view:FormTransform ;
+	view:module <transform.DocumentHTML_typeScript_Form.js> ;
+	view:domain ( bb:Script type:HTMLBodyBlock_UserMenu type:HTMLBodyBlock_ResourceMenu <http://magnode.org/theme/twentyonetwelve/DocumentRegion_Footer> ) ;
+	view:range type:DocumentHTML, type:Document, "media:text/html;charset=utf-8", "media:application/xhtml+xml;charset=utf-8" ;
+	view:nice -1 .
+
+theme:HTTPResponse_typeScript_Post
+	a view:Transform, theme:Transform, view:ModuleTransform, view:PostTransform ;
+	view:module <transform.HTTPResponse_typeScript_Post.js> ;
+	view:domain ( bb:Script ) ;
+	view:range type:HTTPResponse ;
+	view:nice -1 .
+
+# Other formatters
 
 theme:HTMLBody_typePage
 	a view:Transform, theme:Transform, view:Jade ;

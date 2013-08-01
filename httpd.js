@@ -164,8 +164,8 @@ var httpd = require('http').createServer(require('magnode/http').createListener(
 httpd.listen(listenPort);
 
 // Attach websocket listener
-var interface =  new (require('./lib/websocketd'));
-interface.listenWebsocket(httpd);
+var iface =  new (require('./lib/websocketd'));
+iface.listenWebsocket(httpd);
 
 
 // This shouldn't ever happen, but, in case it does, note it and prevent the program from exiting

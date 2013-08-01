@@ -29,6 +29,17 @@ html(xmlns="http://www.w3.org/1999/xhtml", lang="en")
 								a(href='/bb:Script?new') Script
 							li
 								a(href='/bb:Interface?new') Interface
+					li.divider
+					li
+						a#btn-save(href='#') Save
+					li.divider
+					li.has-dropdown
+						a(href='#') Run
+						ul.dropdown
+							li
+								a(href='#') Run
+							li
+								a(href='#') Debug
 				ul.right
 					li.divider
 					li.has-dropdown
@@ -44,8 +55,11 @@ html(xmlns="http://www.w3.org/1999/xhtml", lang="en")
 							li.divider
 							li
 								div!=input["http://magnode.org/HTMLBodyBlock_UserMenu"]
+		form.form-script-editor
+			textarea.field-ecmascript=(input["http://botblocks.net/Script"].body||'');
+			div=JSON.stringify(input["http://botblocks.net/Script"])
+			pre.output
 		.row
-			.body!=input["http://magnode.org/HTMLBody"]
 			.foot
 				//pre=util.inspect(input)
 				div(style="margin:10px 0;")
