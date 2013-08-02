@@ -1,6 +1,9 @@
 
 var fs=require('fs');
+
 var jade = require('jade');
+
+var relativeuri = require('magnode/relativeuri');
 
 var p = '/botblocks/';
 var templateFilename = __dirname+'/DocumentHTML_typeScript_Form.jade';
@@ -30,7 +33,9 @@ function renderDocument(db, transform, input, render, callback){
 	scripts.push({type:'text/javascript',src:p+'js/foundation/foundation.topbar.js'});
 	if(theme.scripts instanceof Array) theme.scripts.forEach(function(v){ scripts.push(v); });
 	// Add us some data
-	var locals = {input:input, stylesheets:stylesheets, scripts:scripts};
+
+	function localurl(url){ return relativeuri(input.rdf, url); }
+	var locals = {input:input, stylesheets:stylesheets, scripts:scripts, localurl:localurl};
 	var result = renderDocumentFn(locals);
 	var output = {};
 	outputType.forEach(function(v){output[v]=result;});

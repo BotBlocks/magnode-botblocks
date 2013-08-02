@@ -30,24 +30,24 @@ html(xmlns="http://www.w3.org/1999/xhtml", lang="en")
 							li
 								a(href='/bb:Interface?new') Interface
 					li.divider
+					li.has-dropdown
+						a#btn-formats Formats
+						ul.dropdown
+							li.divider
+							li
+								div!=input["http://magnode.org/HTMLBodyBlock_ResourceMenu"]
+					li.divider
 					li
-						a#btn-save(href='#') Save
+						a#btn-save(href='') Save
 					li.divider
 					li.has-dropdown
 						a(href='#') Run
 						ul.dropdown
 							li
-								a(href='#') Run
+								a#btn-run(href='') Run
 							li
-								a(href='#') Debug
+								a#btn-debug(href='') Debug
 				ul.right
-					li.divider
-					li.has-dropdown
-						a(href='#') Formats
-						ul.dropdown
-							li.divider
-							li
-								div!=input["http://magnode.org/HTMLBodyBlock_ResourceMenu"]
 					li.divider
 					li.has-dropdown
 						a(href='#') User
@@ -55,9 +55,12 @@ html(xmlns="http://www.w3.org/1999/xhtml", lang="en")
 							li.divider
 							li
 								div!=input["http://magnode.org/HTMLBodyBlock_UserMenu"]
-		form.form-script-editor
-			textarea.field-ecmascript=(input["http://botblocks.net/Script"].body||'');
-			div=JSON.stringify(input["http://botblocks.net/Script"])
+		- var script = input["http://botblocks.net/Script"] || {};
+		form.form-script-editor(action=localurl(script.subject),method="POST")
+			textarea.field-ecmascript=(script.body||'');
+			input(type="hidden", name="value.subject", value=(script.subject||''))
+			input(type="hidden", name="_auth", value=Math.random())
+			pre=JSON.stringify(input["http://botblocks.net/Script"])
 			pre.output
 		.row
 			.foot

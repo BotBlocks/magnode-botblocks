@@ -15,7 +15,7 @@ html(xmlns="http://www.w3.org/1999/xhtml", lang="en")
 				// Title Area
 				li.name
 					h1
-						a( href="/", title="Visit the main page") #{input.title||'BotBlocks'}
+						a(href="/", title="Visit the main page") #{input.title||'BotBlocks'}
 				li.toggle-topbar.menu-icon
 					a(href='#')
 						span menu
@@ -29,7 +29,6 @@ html(xmlns="http://www.w3.org/1999/xhtml", lang="en")
 								a(href='/bb:Script?new') Script
 							li
 								a(href='/bb:Interface?new') Interface
-				ul.right
 					li.divider
 					li.has-dropdown
 						a(href='#') Formats
@@ -37,6 +36,7 @@ html(xmlns="http://www.w3.org/1999/xhtml", lang="en")
 							li.divider
 							li
 								div!=input["http://magnode.org/HTMLBodyBlock_ResourceMenu"]
+				ul.right
 					li.divider
 					li.has-dropdown
 						a(href='#') User

@@ -112,23 +112,32 @@ function populateForms(){
 	})(es[i]);
 
 	var es = document.getElementsByClassName('form-script-editor');
-	for(var i=0; i<es.length; i++) (function(field){
+	for(var i=0; i<es.length; i++) (function(form){
 		try {
-			var textarea = field.getElementsByClassName('field-ecmascript')[0];
+			var eSubject = form.elements['value.subject'];
+			if(!eSubject || !eSubject.value) throw new Error('No subject in form-script-editor');
+			var subject = eSubject.value;
+
+			var eAuth = form.elements['_auth'];
+			if(!eAuth || !eAuth.value) throw new Error('No _auth in form-script-editor');
+			var authToken = eAuth.value;
+
+			var textarea = form.getElementsByClassName('field-ecmascript')[0];
 			var editor = CodeMirror.fromTextArea(textarea, {lineNumbers:true, indentWithTabs:true, tabSize: 4, indentUnit:4, mode:'application/ecmascript'});
 			//new AulxUI.CM(editor); // https://github.com/espadrine/aulx
 
-			var out = field.getElementsByClassName('output')[0];
+			var out = form.getElementsByClassName('output')[0];
 			var onSave = function onSave(){
 				editor.save();
 				out.textContent = textarea.value;
 				var request = new XMLHttpRequest;
-				request.open('PUT', document.location);
+				request.open('PUT', form.action);
 				request.onreadystatechange = update;
 				request.setRequestHeader('Content-Type', 'application/json;profile=http://botblocks.net/Script/ecmascript');
+				request.setRequestHeader('Authorization', 'Bearer '+authToken);
 				request.send(textarea.value);
 				function update(){
-					out.textContent = request.readystate + ' ' + request.statusText;
+					out.textContent = request.readystate + ' ' + request.status + ' ' + request.statusText+'\n\n'+request.responseText;
 				}
 			}
 			onSaveEvents.push(onSave);
