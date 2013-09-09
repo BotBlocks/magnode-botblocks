@@ -5,6 +5,8 @@ var fs = require('fs');
 var configFile = process.env.MAGNODE_CONF || './server.json';
 var listenPort = process.env.MAGNODE_PORT || process.env.PORT || 8080;
 var runSetup = (process.env.MAGNODE_SETUP && process.env.MAGNODE_SETUP!=='0');
+var pidFile = null;
+var daemonize = null;
 
 var rdf=require('rdf');
 rdf.environment.setDefaultPrefix('http://localhost/');
@@ -17,14 +19,41 @@ function bail(){
 	require('http').createServer(require("magnode/http").createListener(route, {rdf:rdf.environment}, {})).listen(listenPort);
 }
 
+function printHelp(){
+	console.log('USAGE: '+process.argv[0]+' '+process.argv[1]+' [options]');
+	console.log('A simple HTTP server for running Magnode');
+	console.log('OPTIONS:');
+	console.log('    --help -h -?         This help');
+	console.log('    --conf <file>        Launch a particular website (default: "server.json")');
+	console.log('    --port <int>         Listen on a particular TCP port');
+	console.log('    --setup              Start in setup mode (automatic if conf file does not exist))');
+	console.log('    --no-setup           Run normally');
+	console.log('    --pidfile <file>     Write process id to a pid file');
+	console.log('    --background         Fork process to background (default if --pidfile is specified)');
+	console.log('    --foreground         Run process in foreground (default without --pidfile)');
+}
+
 var arguments = process.argv.slice(2);
 for(var i=0; i<arguments.length; i++){
 	if(arguments[i]=='--conf') configFile=arguments[++i];
 	if(arguments[i]=='--port') listenPort=parseInt(arguments[++i]);
 	if(arguments[i]=='--setup'){ runSetup=true; }
 	if(arguments[i]=='--no-setup'){ runSetup=false; }
+	if(arguments[i]=='--pidfile'){ pidFile=arguments[++i]; }
+	if(arguments[i]=='--background'){ daemonize=true; }
+	if(arguments[i]=='--foreground'){ daemonize=false; }
+	if(arguments[i]=='--help'||arguments[i]=='-?'||arguments[i]=='-h'){ printHelp(); return; }
 }
+if(daemonize===null) daemonize = !!pidFile;
 configFile = require('path').resolve(process.cwd(), configFile);
+
+if(pidFile){
+	fs.writeFileSync(pidFile, process.pid);
+}
+if(daemonize){
+	var fork = require('child_process').fork(__filename, process.argv.slice(2).concat('--foreground'));
+	process.exit();
+}
 
 if(runSetup) return void bail();
 
@@ -70,6 +99,10 @@ var dbClient = new mongodb(dbHost);
 var dbInstance = dbName?dbClient.db(dbName):dbClient;
 var nodesDb = dbInstance.collection('nodes');
 var shadowDb = dbInstance.collection('shadow');
+var sessionStore = new (require("magnode/session.mac"))(
+	{ expires: 1000*60*60*24*14
+	, secret: siteSecretKey
+	});
 
 // The transforms database
 var transformDb = new rdf.TripletGraph;
@@ -89,12 +122,10 @@ var httpAuthForm = new (require("magnode/authentication.form"))(
 	, action: "/createSession"
 	, credentials: httpAuthCredential
 	}, userAuthz );
-var httpAuthSession = new (require("magnode/authentication.session"))(
-	{ expires: 1000*60*60*24*14
-	, secret: siteSecretKey
-	}, userAuthz);
+var httpAuthSession = new (require("magnode/authentication.session"))(sessionStore, userAuthz);
 var httpAuthCookie = new (require("magnode/authentication.cookie"))(
 	{ domain: "/"
+	, secure: false // FIXME enable this as much as possible, especially if logging in over HTTPS
 	, redirect: "/?from=login"
 	}, httpAuthSession);
 
