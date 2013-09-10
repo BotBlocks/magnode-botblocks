@@ -6,7 +6,7 @@
 # Main theme
 
 theme:DocumentHTML_typeHTMLBody
-	a view:Transform, theme:Transform, view:ModuleTransform, view:DeleteFormTransform, view:FormTransform, view:ViewTransform ;
+	a view:Transform, theme:Transform, view:ModuleTransform, view:DeleteFormTransform, view:PutFormTransform, view:GetTransform ;
 	view:module <transform.DocumentHTML_typeHTMLBody.js> ;
 	view:domain ( type:HTMLBody type:HTMLBodyBlock_UserMenu type:HTMLBodyBlock_ResourceMenu <http://magnode.org/theme/twentyonetwelve/DocumentRegion_Footer> ) ;
 	view:range type:DocumentHTML, type:Document, "media:text/html;charset=utf-8", "media:application/xhtml+xml;charset=utf-8" ;
@@ -15,7 +15,7 @@ theme:DocumentHTML_typeHTMLBody
 # Interface formatters
 
 theme:DocumentHTML_typeInterface
-	a view:Transform, theme:Transform, view:ModuleTransform, view:ViewTransform ;
+	a view:Transform, theme:Transform, view:ModuleTransform, view:GetTransform ;
 	view:module <transform.DocumentHTML_typeInterface.js> ;
 	view:domain ( bb:Interface type:HTMLBodyBlock_UserMenu type:HTMLBodyBlock_ResourceMenu <http://magnode.org/theme/twentyonetwelve/DocumentRegion_Footer> ) ;
 	view:range type:DocumentHTML, type:Document, "media:text/html;charset=utf-8", "media:application/xhtml+xml;charset=utf-8" ;
@@ -24,7 +24,7 @@ theme:DocumentHTML_typeInterface
 # Script formatters
 
 theme:HTMLBody_typeScript_Form
-	a view:Transform, theme:Transform, view:ModuleTransform, view:FormTransform ;
+	a view:Transform, theme:Transform, view:ModuleTransform, view:PutFormTransform ;
 	view:module <transform.DocumentHTML_typeScript_Form.js> ;
 	view:domain ( bb:Script type:HTMLBodyBlock_UserMenu type:HTMLBodyBlock_ResourceMenu <http://magnode.org/theme/twentyonetwelve/DocumentRegion_Footer> ) ;
 	view:range type:DocumentHTML, type:Document, "media:text/html;charset=utf-8", "media:application/xhtml+xml;charset=utf-8" ;
