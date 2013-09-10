@@ -168,6 +168,9 @@ var resources = {
 	"http://magnode.org/theme/twentyonetwelve/DocumentRegion_Header": rdf.environment.resolve(':about')+"#theme/twentyonetwelve/DocumentRegion_Header",
 	"http://magnode.org/theme/twentyonetwelve/DocumentRegion_Panel": rdf.environment.resolve(':about')+"#theme/twentyonetwelve/DocumentRegion_Panel",
 	"http://magnode.org/theme/twentyonetwelve/DocumentRegion_Footer": rdf.environment.resolve(':about')+"#theme/twentyonetwelve/DocumentRegion_Footer",
+	"http://botblocks.net/theme/DocumentRegion_Header": rdf.environment.resolve(':about')+"#theme/botblocks/DocumentRegion_Header",
+	"http://botblocks.net/theme/DocumentRegion_Panel": rdf.environment.resolve(':about')+"#theme/botblocks/DocumentRegion_Panel",
+	"http://botblocks.net/theme/DocumentRegion_Footer": rdf.environment.resolve(':about')+"#theme/botblocks/DocumentRegion_Footer",
 };
 
 // Import other configuration options if any, like "title" and "logo"
